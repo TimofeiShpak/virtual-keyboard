@@ -100,7 +100,7 @@ language+=returnLang;
 
 let caps="small";
 function lang(){
-if(!language)language="ru";
+if(language== "null")language="ru";
 const save=JSON.stringify(language);
 localStorage.setItem("myKey",save);
 if(language=="en"){
