@@ -386,6 +386,8 @@ if(language=="en"){
 }
 }
 
+lang();
+
 wrapper.addEventListener("click",(e)=>{
 	let a=e.target.className;
 	let b=e.target.innerText;
