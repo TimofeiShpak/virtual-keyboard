@@ -392,19 +392,21 @@ wrapper.addEventListener("click",(e)=>{
 	let a=e.target.className;
 	let b=e.target.innerText;
 	if(a!="key-wrapper" && a!="line" && b!="Enter"  && b!="Tab" && b!="CapsLock" && b!="Backspace" && b!="Del" && b!="Alt" && b!="Ctrl" && b!="Win" && b!="Shift"){
-	textInput.value+=e.target.innerText;
 	textInput.click();
+	textInput.setRangeText(e.target.innerText, textInput.selectionStart, textInput.selectionEnd, "end");
+	textInput.focus();
 	}
 	else if(b==" "){
-		textInput.value+=" ";
 		textInput.click();
+		textInput.setRangeText(" ", textInput.selectionStart, textInput.selectionEnd, "end");
+		textInput.focus();
 	}else if(b=="Tab"){
 		textInput.click();
 		textInput.setRangeText("	", textInput.selectionStart, textInput.selectionEnd, "end");
 		textInput.focus();
 	}else if(b=="Backspace"){
 		textInput.click();
-		textInput.setRangeText("", textInput.selectionStart-1, textInput.selectionEnd, "end");
+		if(textInput.selectionStart>0)textInput.setRangeText("", textInput.selectionStart-1, textInput.selectionEnd, "end");
 		textInput.focus();
 	}else if(b=="Del"){
 		textInput.click();
@@ -412,21 +414,23 @@ wrapper.addEventListener("click",(e)=>{
 		textInput.focus();
 	}else if(b=="Enter"){
 		textInput.click();
-		textInput.value+="\n";
-		textInput.click();
+		textInput.setRangeText("\n", textInput.selectionStart, textInput.selectionEnd, "end");
+		textInput.focus();
 	}else if(b=="CapsLock"){
 		textInput.click();
+		textInput.focus();
 		if(caps=="big"){caps="small";thirdLine.children[0].classList.remove("active");}else if(caps=="small"){caps="big";thirdLine.children[0].classList.add("active");}
 		lang();
 	}
 });
 
 wrapper.addEventListener("mousedown",(e)=>{
+	textInput.focus();
 	let a=e.target.className;
 	if(a!="key-wrapper" && a!="line"){
 		let radius=0;
 		e.target.classList.add("active");
-		if(e.target.innerText!="CapsLock"){
+		if(e.target.innerText!="CapsLock" && e.target.innerText!="Shift"){
 			setInterval(()=>{radius=+radius;if(radius<20){radius+=1;e.target.style.borderRadius=`${radius}px`;}else return;},5);
 		}else if(e.target.innerText=="Shift"){
 			if(caps=="small"){caps="big";}
@@ -713,7 +717,6 @@ const keydown=(e)=>{
 	let ctrlR=fifthLine.children[8].className;
 	let altL=fifthLine.children[2].className;
 	let altR=fifthLine.children[4].className;
-	console.log(altR);
 	if(!checkChange){
 		if((ctrlL=="button-small littleBtn active" ||ctrlR=="button-small littleBtn active") && (altL=="button-small littleBtn active" || altR=="button-small littleBtn active")){
 			checkChange=1;
