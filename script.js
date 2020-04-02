@@ -1,3 +1,6 @@
+let textLanguage=document.createElement("p");
+textLanguage.innerText="Кнопки для смены языка: ctrl+alt";
+document.body.append(textLanguage);
 let textInput=document.createElement("textarea");
 textInput.classList.add("text-input");
 let wrapper=document.createElement("div");
