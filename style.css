@@ -1,91 +1,68 @@
 *{
-	box-sizing:border-box;
+     box-sizing:border-box;
 }
-
-button{
-border: none;
-outline: none;
-
+ button{
+     border: none;
+     outline: none;
 }
-
-.key-wrapper{
-	-webkit-user-select: none; /* Google Chrome, Opera Next, Safari */
-	width:700px;
-	height: 250px;
-	background-color: #C0C0C0;
-	margin-left: 27.5%;
-	border: 3px solid black;
-	border-radius: 6px;
-	display: -webkit-flex; 
-	display: flex;
-	flex-direction: column; 
+ .key-wrapper{
+     -webkit-user-select: none;
+     width:700px;
+     height: 250px;
+     background-color: #C0C0C0;
+     margin-left: 27.5%;
+     border: 3px solid black;
+     border-radius: 6px;
+     display: -webkit-flex;
+     display: flex;
+     flex-direction: column;
 }
-
-.text-input{
-	font-size: 20px;
-	width:780px;
-	margin-left: 25%;
-	height: 300px;
+ .text-input{
+     font-size: 20px;
+     width:780px;
+     margin-left: 25%;
+     height: 300px;
 }
-
-.line{
-	height: 35px;
-	margin-top: 10px;
-	display: -webkit-inline-flex;
- 	display: inline-flex; 
+ .line{
+     height: 35px;
+     margin-top: 10px;
+     display: -webkit-inline-flex;
+     display: inline-flex;
 }
-
-.line:last-child{
-	margin-bottom:10px;
+ .line:last-child{
+     margin-bottom:10px;
 }
-
-.button-small{
-
-	width:35px;
-	height: 35px;
-	margin-left: 10px;
-	background-color: #2F4F4F;
-	color: white;
-	font-size: 15px;
+ .button-small{
+     width:35px;
+     height: 35px;
+     margin-left: 10px;
+     background-color: #2F4F4F;
+     color: white;
+     font-size: 15px;
 }
-
-.bigBtnL{
-	width:89px;
-	background-color: black;
+ .bigBtnL{
+     width:89px;
+     background-color: black;
 }
-
-.bigBtnR{
-	width:80px;
-	background-color: black;
-	margin-right: 10px;
+ .bigBtnR{
+     width:80px;
+     background-color: black;
+     margin-right: 10px;
 }
-
-.tab{
-	width:44px;	
-	background-color: black;
+ .tab{
+     width:44px;
+     background-color: black;
 }
-
-.littleBtn{
-	background-color: black;
+ .littleBtn{
+     background-color: black;
 }
-
-.space{
-	width: 314px;
+ .space{
+     width: 314px;
 }
-
-.active{
-	background-color: green;
+ .active{
+     background-color: green;
 }
-
-.button-small:hover:not(.active){
-	background-color: #5F4F4F;
+ .button-small:hover:not(.active){
+     background-color: #5F4F4F;
 }
-
-
-
-
-
-
-
-
-
+ 
