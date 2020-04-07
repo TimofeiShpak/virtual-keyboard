@@ -73,7 +73,7 @@ const forthLineKeys = {
 };
 
 const fifthLineKeys = {
-  ruSmall: ["Ctrl", "Win", "Alt", " ", "Alt", "◄", "▼", "►", "Ctrl"],
+  ruSmall: ["Ctrl", "Win", "Alt", "", "Alt", "◄", "▼", "►", "Ctrl"],
   name: "fifthLine",
 };
 
@@ -162,13 +162,13 @@ function animationDown(e) {
 wrapper.addEventListener("click", (e) => {
   const a = e.target.className;
   const b = e.target.innerText;
-  if (a !== "key-wrapper" && a !== "line" && b !== "Enter" && b !== "Tab" && b !== "CapsLock" && b !== "Backspace" && b !== "Del" && b !== "Alt" && b !== "Ctrl" && b !== "Win" && b !== "Shift") {
+  if (a !== "key-wrapper" && a !== "line" && b !== "Enter" && b !== "Tab" && b !== "CapsLock" && b !== "Backspace" && b !== "Del" && b !== "Alt" && b !== "Ctrl" && b !== "Win" && b !== "Shift" && a !== "button-small space") {
     textInput.click();
     textInput.setRangeText(e.target.innerText, textInput.selectionStart, textInput.selectionEnd, "end");
     textInput.focus();
-  } else if (b === " ") {
+  } else if (b === "") {
     textInput.click();
-    textInput.setRangeText(" ", textInput.selectionStart, textInput.selectionEnd, "end");
+    textInput.setRangeText(" ", textInput.selectionStart, textInput.selectionEnd, "end");
     textInput.focus();
   } else if (b === "Tab") {
     textInput.click();
