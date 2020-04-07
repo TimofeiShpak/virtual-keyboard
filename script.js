@@ -95,7 +95,7 @@ createRow();
 const typePast = JSON.parse(localStorage.getItem("myKey"));
 if (type === "null" || type === "") type = "ruSmall";
 if(typePast){
-  else if (typePast[0] === "e") type = "enSmall";
+  if (typePast[0] === "e") type = "enSmall";
   else if (typePast[0] === "r") type = "ruSmall";
 }
 
