@@ -186,12 +186,6 @@ wrapper.addEventListener("click", (e) => {
     textInput.click();
     textInput.setRangeText("\n", textInput.selectionStart, textInput.selectionEnd, "end");
     textInput.focus();
-  } else if (b === "CapsLock") {
-    textInput.click();
-    textInput.focus();
-    if (type === "ruSmall") { animationDown(e.target); type = "ruCaps"; thirdLine.children[0].classList.add("active"); } else if (type === "ruCaps") { animationUp(e.target); type = "ruSmall"; thirdLine.children[0].classList.remove("active"); }
-    if (type === "enSmall") { animationDown(e.target); type = "enCaps"; thirdLine.children[0].classList.add("active"); } else if (type === "enCaps") { animationUp(e.target); type = "enSmall"; thirdLine.children[0].classList.remove("active"); }
-    change();
   }
 });
 
@@ -223,6 +217,25 @@ wrapper.addEventListener("mousedown", (e) => {
         e.target.classList.add("active");
         change();
       }
+    } else if (e.target.innerText === "CapsLock") {
+      if (type === "ruSmall") {
+        type = "ruCaps";
+        thirdLine.children[0].classList.add("active");
+        animationDown(thirdLine.children[0]);
+      } else if (type === "ruCaps") {
+        type = "ruSmall";
+        thirdLine.children[0].classList.remove("active");
+        animationUp(thirdLine.children[0]);
+      } if (type === "enSmall") {
+        type = "enCaps";
+        thirdLine.children[0].classList.add("active");
+        animationDown(thirdLine.children[0]);
+      } else if (type === "enCaps") {
+        type = "enSmall";
+        thirdLine.children[0].classList.remove("active");
+        animationUp(thirdLine.children[0]);
+      }
+      change();
     }
   }
 });
@@ -257,7 +270,7 @@ wrapper.addEventListener("mouseout", (e) => {
   }
 });
 
-let checkCaps = 0;
+let checkCaps = 1;
 const checkShiftL = 0;
 const checkShiftR = 0;
 let checkChange = 0;
@@ -326,10 +339,26 @@ const keydown = (e) => {
   if (e.keyCode === 46) {
     buttonUp(secondLine.children[14]);
   }
-  if (!checkCaps) {
+  if (checkCaps) {
     if (e.keyCode === 20) {
-      if (type === "ruSmall") { type = "ruCaps"; thirdLine.children[0].classList.add("active"); } else if (type === "ruCaps") { type = "ruSmall"; thirdLine.children[0].classList.remove("active"); }
-      if (type === "enSmall") { type = "enCaps"; thirdLine.children[0].classList.add("active"); } else if (type === "enCaps") { type = "enSmall"; thirdLine.children[0].classList.remove("active"); }
+      checkCaps = 0;
+      if (type === "ruSmall") {
+        type = "ruCaps";
+        thirdLine.children[0].classList.add("active");
+        animationDown(thirdLine.children[0]);
+      } else if (type === "ruCaps") {
+        type = "ruSmall";
+        thirdLine.children[0].classList.remove("active");
+        animationUp(thirdLine.children[0]);
+      } if (type === "enSmall") {
+        type = "enCaps";
+        thirdLine.children[0].classList.add("active");
+        animationDown(thirdLine.children[0]);
+      } else if (type === "enCaps") {
+        type = "enSmall";
+        thirdLine.children[0].classList.remove("active");
+        animationUp(thirdLine.children[0]);
+      }
       change();
     }
   }
@@ -376,6 +405,7 @@ const keydown = (e) => {
       if (type === "ruCaps") { type = "ruShiftCaps"; }
       if (type === "enCaps") { type = "enShiftCaps"; }
       forthLine.children[0].classList.add("active");
+      animationDown(forthLine.children[0]);
       change();
     }
   }
@@ -419,6 +449,7 @@ const keydown = (e) => {
       if (type === "ruCaps") { type = "ruShiftCaps"; }
       if (type === "enCaps") { type = "enShiftCaps"; }
       forthLine.children[12].classList.add("active");
+      animationDown(forthLine.children[12]);
       change();
     }
   }
@@ -468,7 +499,7 @@ const keydown = (e) => {
 
 const keyup = (e) => {
   if (e.keyCode === 20) {
-    checkCaps = 0;
+    checkCaps = 1;
   }
   if (e.keyCode === 192) {
     buttonDown(firstLine.children[0]);
@@ -575,6 +606,7 @@ const keyup = (e) => {
     if (type === "enShiftCaps") { type = "enCaps"; }
     if (type === "ruShiftCaps") { type = "ruCaps"; }
     forthLine.children[0].classList.remove("active");
+    animationUp(forthLine.children[0]);
     change();
   }
   if (e.keyCode === 90) {
@@ -616,6 +648,7 @@ const keyup = (e) => {
     if (type === "enShiftCaps") { type = "enCaps"; }
     if (type === "ruShiftCaps") { type = "ruCaps"; }
     forthLine.children[12].classList.remove("active");
+    animationUp(forthLine.children[12]);
     change();
   }
   if (e.keyCode === 17 && e.code === "ControlLeft") {
