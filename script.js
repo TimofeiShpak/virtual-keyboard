@@ -3,7 +3,7 @@ function addElement(element, place) {
   place.append(element);
 }
 const textLanguage = document.createElement("p");
-textLanguage.innerText = "Кнопки для смены языка: ctrl+alt";
+textLanguage.innerText = "Клавиатура создана в операционной системе Windows\nКнопки для смены языка: ctrl+alt";
 addElement(textLanguage, document.body);
 const textInput = document.createElement("textarea");
 textInput.classList.add("text-input");
