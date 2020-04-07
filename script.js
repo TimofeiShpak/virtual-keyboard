@@ -1,431 +1,132 @@
 /* eslint-disable no-plusplus */
+function addElement(element, place) {
+  place.append(element);
+}
 const textLanguage = document.createElement("p");
 textLanguage.innerText = "Кнопки для смены языка: ctrl+alt";
-document.body.append(textLanguage);
+addElement(textLanguage, document.body);
 const textInput = document.createElement("textarea");
 textInput.classList.add("text-input");
 const wrapper = document.createElement("div");
 wrapper.classList.add("key-wrapper");
-document.body.append(textInput);
-document.body.append(wrapper);
+addElement(textInput, document.body);
+addElement(wrapper, document.body);
 const firstLine = document.createElement("div");
-firstLine.classList.add("line");
-let secondLine = document.createElement("div");
-secondLine.classList.add("line");
-let thirdLine = document.createElement("div");
-thirdLine.classList.add("line");
-let forthLine = document.createElement("div");
-forthLine.classList.add("line");
-let fifthLine = document.createElement("div");
-fifthLine.classList.add("line");
-wrapper.append(firstLine);
-const buttonSmall1 = document.createElement("button");
-buttonSmall1.classList.add("button-small");
-const buttonSmall2 = document.createElement("button");
-buttonSmall2.classList.add("button-small");
-const buttonSmall3 = document.createElement("button");
-buttonSmall3.classList.add("button-small");
-const buttonSmall4 = document.createElement("button");
-buttonSmall4.classList.add("button-small");
-const buttonSmall5 = document.createElement("button");
-buttonSmall5.classList.add("button-small");
-const buttonSmall6 = document.createElement("button");
-buttonSmall6.classList.add("button-small");
-const buttonSmall7 = document.createElement("button");
-buttonSmall7.classList.add("button-small");
-const buttonSmall8 = document.createElement("button");
-buttonSmall8.classList.add("button-small");
-const buttonSmall9 = document.createElement("button");
-buttonSmall9.classList.add("button-small");
-const buttonSmall10 = document.createElement("button");
-buttonSmall10.classList.add("button-small");
-const buttonSmall11 = document.createElement("button");
-buttonSmall11.classList.add("button-small");
-const buttonSmall12 = document.createElement("button");
-buttonSmall12.classList.add("button-small");
-const buttonSmall13 = document.createElement("button");
-buttonSmall13.classList.add("button-small");
-const buttonSmall14 = document.createElement("button");
-buttonSmall14.classList.add("button-small");
-const buttonSmall15 = document.createElement("button");
-buttonSmall15.classList.add("button-small");
-firstLine.append(buttonSmall1);
-firstLine.append(buttonSmall2);
-firstLine.append(buttonSmall3);
-firstLine.append(buttonSmall4);
-firstLine.append(buttonSmall5);
-firstLine.append(buttonSmall6);
-firstLine.append(buttonSmall7);
-firstLine.append(buttonSmall8);
-firstLine.append(buttonSmall9);
-firstLine.append(buttonSmall10);
-firstLine.append(buttonSmall11);
-firstLine.append(buttonSmall12);
-firstLine.append(buttonSmall13);
-firstLine.append(buttonSmall14);
-secondLine = firstLine.cloneNode("true");
-wrapper.append(secondLine);
-thirdLine = firstLine.cloneNode("true");
-wrapper.append(thirdLine);
-forthLine = firstLine.cloneNode("true");
-wrapper.append(forthLine);
-fifthLine = firstLine.cloneNode("true");
-wrapper.append(fifthLine);
+const secondLine = document.createElement("div");
+const thirdLine = document.createElement("div");
+const forthLine = document.createElement("div");
+const fifthLine = document.createElement("div");
+const arrayLines = [firstLine, secondLine, thirdLine, forthLine, fifthLine];
+for (let i = 0; i < arrayLines.length; i++) {
+  arrayLines[i].classList.add("line");
+  addElement(arrayLines[i], wrapper);
+}
+
+let type = "ruSmall";
+
+const firstLineKeys = {
+  ruSmall: ["ё", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace"],
+  ruShift: ["Ё", "!", "\"", "№", ";", "%", ":", "?", "*", "(", ")", "_", "+", "Backspace"],
+  ruShiftCaps: ["ё", "!", "\"", "№", ";", "%", ":", "?", "*", "(", ")", "_", "+", "Backspace"],
+  ruCaps: ["Ё", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace"],
+  enCaps: ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace"],
+  enSmall: ["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace"],
+  enShift: ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "Backspace"],
+  enShiftCaps: ["~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "Backspace"],
+  name: "firstLine",
+};
+
+const secondLineKeys = {
+  ruSmall: ["Tab", "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ", "\\", "Del"],
+  ruShift: ["Tab", "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ", "/", "Del"],
+  ruShiftCaps: ["Tab", "й", "ц", "у", "к", "е", "н", "г", "ш", "щ", "з", "х", "ъ", "/", "Del"],
+  ruCaps: ["Tab", "Й", "Ц", "У", "К", "Е", "Н", "Г", "Ш", "Щ", "З", "Х", "Ъ", "\\", "Del"],
+  enSmall: ["Tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]", "\\", "Del"],
+  enShift: ["Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "{", "}", "|", "Del"],
+  enShiftCaps: ["Tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "{", "}", "|", "Del"],
+  enCaps: ["Tab", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\", "Del"],
+  name: "secondLine",
+};
+
+const thirdLineKeys = {
+  ruSmall: ["CapsLock", "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", "Enter"],
+  ruShift: ["CapsLock", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "Enter"],
+  ruShiftCaps: ["CapsLock", "ф", "ы", "в", "а", "п", "р", "о", "л", "д", "ж", "э", "Enter"],
+  ruCaps: ["CapsLock", "Ф", "Ы", "В", "А", "П", "Р", "О", "Л", "Д", "Ж", "Э", "Enter"],
+  enSmall: ["CapsLock", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "Enter"],
+  enShift: ["CapsLock", "A", "S", "D", "F", "G", "H", "J", "K", "L", ":", "\"", "Enter"],
+  enShiftCaps: ["CapsLock", "a", "s", "d", "f", "g", "h", "j", "k", "l", ":", "\"", "Enter"],
+  enCaps: ["CapsLock", "A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "Enter"],
+  name: "thirdLine",
+};
+
+const forthLineKeys = {
+  ruSmall: ["Shift", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", ".", "▲", "Shift"],
+  ruShift: ["Shift", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", ",", "▲", "Shift"],
+  ruShiftCaps: ["Shift", "я", "ч", "с", "м", "и", "т", "ь", "б", "ю", ",", "▲", "Shift"],
+  ruCaps: ["Shift", "Я", "Ч", "С", "М", "И", "Т", "Ь", "Б", "Ю", ".", "▲", "Shift"],
+  enSmall: ["Shift", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "▲", "Shift"],
+  enShift: ["Shift", "Z", "X", "C", "V", "B", "N", "M", "<", ">", "?", "▲", "Shift"],
+  enShiftCaps: ["Shift", "z", "x", "c", "v", "b", "n", "m", "<", ">", "?", "▲", "Shift"],
+  enCaps: ["Shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "▲", "Shift"],
+  name: "forthLine",
+};
+
+const fifthLineKeys = {
+  ruSmall: ["Ctrl", "Win", "Alt", " ", "Alt", "◄", "▼", "►", "Ctrl"],
+  name: "fifthLine",
+};
+
+const arrayLinesKeys = [firstLineKeys, secondLineKeys, thirdLineKeys, forthLineKeys, fifthLineKeys];
+
+function createRow() {
+  for (let j = 0; j < arrayLinesKeys.length; j++) {
+    const keys = arrayLinesKeys[j][type];
+    for (let i = 0; i < keys.length; i++) {
+      const button = document.createElement("button");
+      button.classList.add("button-small");
+      button.innerText = keys[i];
+      addElement(button, arrayLines[j]);
+    }
+  }
+}
+createRow();
+
+const typePast = JSON.parse(localStorage.getItem("myKey"));
+if (type === "null" || type === "") type = "ruSmall";
+else if (typePast[0] === "e") type = "enSmall";
+else if (typePast[0] === "r") type = "ruSmall";
+
+function change() {
+  const save = JSON.stringify(type);
+  localStorage.setItem("myKey", save);
+  for (let j = 0; j < arrayLinesKeys.length; j++) {
+    if (arrayLinesKeys[j][type] !== undefined) {
+      const keys = arrayLinesKeys[j][type];
+      for (let i = 0; i < keys.length; i++) {
+        arrayLines[j].children[i].innerText = keys[i];
+      }
+    }
+  }
+}
+change();
 
 firstLine.children[13].classList.add("bigBtnL");
-
-secondLine.append(buttonSmall15);
 secondLine.children[0].classList.add("tab");
 secondLine.children[14].classList.add("littleBtn");
-
 thirdLine.children[0].classList.add("bigBtnL");
 thirdLine.children[12].classList.add("bigBtnR");
-thirdLine.children[13].remove();
-
 forthLine.children[0].classList.add("bigBtnL");
 forthLine.children[11].classList.add("littleBtn");
 forthLine.children[12].classList.add("bigBtnR");
-forthLine.children[13].remove();
 
-let check = 1;
 for (let i = 0; i < 10; i++) {
   if (i !== 3 && i < 9) {
     fifthLine.children[i].classList.add("littleBtn");
-  } else if (i > 8 && check < 6) {
-    fifthLine.children[i].remove();
-    i--;
-    check++;
   }
 }
 fifthLine.children[3].classList.add("space");
-let language = "";
-const returnLang = JSON.parse(localStorage.getItem("myKey"));
-language += returnLang;
 
-let caps = "small";
-function lang() {
-  if (language === "null")language = "ru";
-  const save = JSON.stringify(language);
-  localStorage.setItem("myKey", save);
-  if (language === "en") {
-    if (caps === "small") {
-      firstLine.children[0].innerText = "`";
-      firstLine.children[1].innerText = "1";
-      firstLine.children[2].innerText = "2";
-      firstLine.children[3].innerText = "3";
-      firstLine.children[4].innerText = "4";
-      firstLine.children[5].innerText = "5";
-      firstLine.children[6].innerText = "6";
-      firstLine.children[7].innerText = "7";
-      firstLine.children[8].innerText = "8";
-      firstLine.children[9].innerText = "9";
-      firstLine.children[10].innerText = "0";
-      firstLine.children[11].innerText = "-";
-      firstLine.children[12].innerText = " = ";
-      firstLine.children[13].innerText = "Backspace";
-
-      secondLine.children[0].innerText = "Tab";
-      secondLine.children[1].innerText = "q";
-      secondLine.children[2].innerText = "w";
-      secondLine.children[3].innerText = "e";
-      secondLine.children[4].innerText = "r";
-      secondLine.children[5].innerText = "t";
-      secondLine.children[6].innerText = "y";
-      secondLine.children[7].innerText = "u";
-      secondLine.children[8].innerText = "i";
-      secondLine.children[9].innerText = "o";
-      secondLine.children[10].innerText = "p";
-      secondLine.children[11].innerText = "[";
-      secondLine.children[12].innerText = "]";
-      secondLine.children[13].innerText = "\\";
-      secondLine.children[14].innerText = "Del";
-
-      thirdLine.children[0].innerText = "CapsLock";
-      thirdLine.children[1].innerText = "a";
-      thirdLine.children[2].innerText = "s";
-      thirdLine.children[3].innerText = "d";
-      thirdLine.children[4].innerText = "f";
-      thirdLine.children[5].innerText = "g";
-      thirdLine.children[6].innerText = "h";
-      thirdLine.children[7].innerText = "j";
-      thirdLine.children[8].innerText = "k";
-      thirdLine.children[9].innerText = "l";
-      thirdLine.children[10].innerText = ";";
-      thirdLine.children[11].innerText = "\"";
-      thirdLine.children[12].innerText = "Enter";
-
-      forthLine.children[0].innerText = "Shift";
-      forthLine.children[1].innerText = "z";
-      forthLine.children[2].innerText = "x";
-      forthLine.children[3].innerText = "c";
-      forthLine.children[4].innerText = "v";
-      forthLine.children[5].innerText = "b";
-      forthLine.children[6].innerText = "n";
-      forthLine.children[7].innerText = "m";
-      forthLine.children[8].innerText = ",";
-      forthLine.children[9].innerText = ".";
-      forthLine.children[10].innerText = "/";
-      forthLine.children[11].innerText = "▲";
-      forthLine.children[12].innerText = "Shift";
-
-      fifthLine.children[0].innerText = "Ctrl";
-      fifthLine.children[1].innerText = "Win";
-      fifthLine.children[2].innerText = "Alt";
-      fifthLine.children[3].innerText = " ";
-      fifthLine.children[4].innerText = "Alt";
-      fifthLine.children[5].innerText = "◄";
-      fifthLine.children[6].innerText = "▼";
-      fifthLine.children[7].innerText = "►";
-      fifthLine.children[8].innerText = "Ctrl";
-    } else if (caps === "big") {
-      firstLine.children[0].innerText = "~";
-      firstLine.children[1].innerText = "!";
-      firstLine.children[2].innerText = "@";
-      firstLine.children[3].innerText = "#";
-      firstLine.children[4].innerText = "$";
-      firstLine.children[5].innerText = "%";
-      firstLine.children[6].innerText = "^";
-      firstLine.children[7].innerText = "&";
-      firstLine.children[8].innerText = "*";
-      firstLine.children[9].innerText = "(";
-      firstLine.children[10].innerText = ")";
-      firstLine.children[11].innerText = "_";
-      firstLine.children[12].innerText = "+";
-      firstLine.children[13].innerText = "Backspace";
-
-      secondLine.children[0].innerText = "Tab";
-      secondLine.children[1].innerText = "Q";
-      secondLine.children[2].innerText = "W";
-      secondLine.children[3].innerText = "E";
-      secondLine.children[4].innerText = "R";
-      secondLine.children[5].innerText = "T";
-      secondLine.children[6].innerText = "Y";
-      secondLine.children[7].innerText = "U";
-      secondLine.children[8].innerText = "I";
-      secondLine.children[9].innerText = "O";
-      secondLine.children[10].innerText = "P";
-      secondLine.children[11].innerText = "{";
-      secondLine.children[12].innerText = "}";
-      secondLine.children[13].innerText = "|";
-      secondLine.children[14].innerText = "Del";
-
-      thirdLine.children[0].innerText = "CapsLock";
-      thirdLine.children[1].innerText = "A";
-      thirdLine.children[2].innerText = "S";
-      thirdLine.children[3].innerText = "D";
-      thirdLine.children[4].innerText = "F";
-      thirdLine.children[5].innerText = "G";
-      thirdLine.children[6].innerText = "H";
-      thirdLine.children[7].innerText = "J";
-      thirdLine.children[8].innerText = "K";
-      thirdLine.children[9].innerText = "L";
-      thirdLine.children[10].innerText = ":";
-      thirdLine.children[11].innerText = "\"";
-      thirdLine.children[12].innerText = "Enter";
-
-      forthLine.children[0].innerText = "Shift";
-      forthLine.children[1].innerText = "Z";
-      forthLine.children[2].innerText = "X";
-      forthLine.children[3].innerText = "C";
-      forthLine.children[4].innerText = "V";
-      forthLine.children[5].innerText = "B";
-      forthLine.children[6].innerText = "N";
-      forthLine.children[7].innerText = "M";
-      forthLine.children[8].innerText = "<";
-      forthLine.children[9].innerText = ">";
-      forthLine.children[10].innerText = "?";
-      forthLine.children[11].innerText = "▲";
-      forthLine.children[12].innerText = "Shift";
-
-      fifthLine.children[0].innerText = "Ctrl";
-      fifthLine.children[1].innerText = "Win";
-      fifthLine.children[2].innerText = "Alt";
-      fifthLine.children[3].innerText = " ";
-      fifthLine.children[4].innerText = "Alt";
-      fifthLine.children[5].innerText = "◄";
-      fifthLine.children[6].innerText = "▼";
-      fifthLine.children[7].innerText = "►";
-      fifthLine.children[8].innerText = "Ctrl";
-    }
-  } else if (language === "ru") {
-    if (caps === "small") {
-      firstLine.children[0].innerText = "ё";
-      firstLine.children[1].innerText = "1";
-      firstLine.children[2].innerText = "2";
-      firstLine.children[3].innerText = "3";
-      firstLine.children[4].innerText = "4";
-      firstLine.children[5].innerText = "5";
-      firstLine.children[6].innerText = "6";
-      firstLine.children[7].innerText = "7";
-      firstLine.children[8].innerText = "8";
-      firstLine.children[9].innerText = "9";
-      firstLine.children[10].innerText = "0";
-      firstLine.children[11].innerText = "-";
-      firstLine.children[12].innerText = " = ";
-      firstLine.children[13].innerText = "Backspace";
-
-      secondLine.children[0].innerText = "Tab";
-      secondLine.children[1].innerText = "й";
-      secondLine.children[2].innerText = "ц";
-      secondLine.children[3].innerText = "у";
-      secondLine.children[4].innerText = "к";
-      secondLine.children[5].innerText = "е";
-      secondLine.children[6].innerText = "н";
-      secondLine.children[7].innerText = "г";
-      secondLine.children[8].innerText = "ш";
-      secondLine.children[9].innerText = "щ";
-      secondLine.children[10].innerText = "з";
-      secondLine.children[11].innerText = "х";
-      secondLine.children[12].innerText = "ъ";
-      secondLine.children[13].innerText = "\\";
-      secondLine.children[14].innerText = "Del";
-
-      thirdLine.children[0].innerText = "CapsLock";
-      thirdLine.children[1].innerText = "ф";
-      thirdLine.children[2].innerText = "ы";
-      thirdLine.children[3].innerText = "в";
-      thirdLine.children[4].innerText = "а";
-      thirdLine.children[5].innerText = "п";
-      thirdLine.children[6].innerText = "р";
-      thirdLine.children[7].innerText = "о";
-      thirdLine.children[8].innerText = "л";
-      thirdLine.children[9].innerText = "д";
-      thirdLine.children[10].innerText = "ж";
-      thirdLine.children[11].innerText = "э";
-      thirdLine.children[12].innerText = "Enter";
-
-      forthLine.children[0].innerText = "Shift";
-      forthLine.children[1].innerText = "я";
-      forthLine.children[2].innerText = "ч";
-      forthLine.children[3].innerText = "c";
-      forthLine.children[4].innerText = "м";
-      forthLine.children[5].innerText = "и";
-      forthLine.children[6].innerText = "т";
-      forthLine.children[7].innerText = "ь";
-      forthLine.children[8].innerText = "б";
-      forthLine.children[9].innerText = "ю";
-      forthLine.children[10].innerText = ".";
-      forthLine.children[11].innerText = "▲";
-      forthLine.children[12].innerText = "Shift";
-
-      fifthLine.children[0].innerText = "Ctrl";
-      fifthLine.children[1].innerText = "Win";
-      fifthLine.children[2].innerText = "Alt";
-      fifthLine.children[3].innerText = " ";
-      fifthLine.children[4].innerText = "Alt";
-      fifthLine.children[5].innerText = "◄";
-      fifthLine.children[6].innerText = "▼";
-      fifthLine.children[7].innerText = "►";
-      fifthLine.children[8].innerText = "Ctrl";
-    } else if (caps === "big") {
-      firstLine.children[0].innerText = "~";
-      firstLine.children[1].innerText = "!";
-      firstLine.children[2].innerText = "@";
-      firstLine.children[3].innerText = "#";
-      firstLine.children[4].innerText = "$";
-      firstLine.children[5].innerText = "%";
-      firstLine.children[6].innerText = "^";
-      firstLine.children[7].innerText = "&";
-      firstLine.children[8].innerText = "*";
-      firstLine.children[9].innerText = "(";
-      firstLine.children[10].innerText = ")";
-      firstLine.children[11].innerText = "_";
-      firstLine.children[12].innerText = "+";
-      firstLine.children[13].innerText = "Backspace";
-
-      secondLine.children[0].innerText = "Tab";
-      secondLine.children[1].innerText = "Й";
-      secondLine.children[2].innerText = "Ц";
-      secondLine.children[3].innerText = "У";
-      secondLine.children[4].innerText = "К";
-      secondLine.children[5].innerText = "Е";
-      secondLine.children[6].innerText = "Н";
-      secondLine.children[7].innerText = "Г";
-      secondLine.children[8].innerText = "Ш";
-      secondLine.children[9].innerText = "Щ";
-      secondLine.children[10].innerText = "З";
-      secondLine.children[11].innerText = "Х";
-      secondLine.children[12].innerText = "Ъ";
-      secondLine.children[13].innerText = "/";
-      secondLine.children[14].innerText = "Del";
-
-      thirdLine.children[0].innerText = "CapsLock";
-      thirdLine.children[1].innerText = "Ф";
-      thirdLine.children[2].innerText = "Ы";
-      thirdLine.children[3].innerText = "В";
-      thirdLine.children[4].innerText = "А";
-      thirdLine.children[5].innerText = "П";
-      thirdLine.children[6].innerText = "Р";
-      thirdLine.children[7].innerText = "О";
-      thirdLine.children[8].innerText = "Л";
-      thirdLine.children[9].innerText = "Д";
-      thirdLine.children[10].innerText = "Ж";
-      thirdLine.children[11].innerText = "Э";
-      thirdLine.children[12].innerText = "Enter";
-
-      forthLine.children[0].innerText = "Shift";
-      forthLine.children[1].innerText = "Я";
-      forthLine.children[2].innerText = "Ч";
-      forthLine.children[3].innerText = "С";
-      forthLine.children[4].innerText = "М";
-      forthLine.children[5].innerText = "И";
-      forthLine.children[6].innerText = "Т";
-      forthLine.children[7].innerText = "Ь";
-      forthLine.children[8].innerText = "Б";
-      forthLine.children[9].innerText = "Ю";
-      forthLine.children[10].innerText = ",";
-      forthLine.children[11].innerText = "▲";
-      forthLine.children[12].innerText = "Shift";
-
-      fifthLine.children[0].innerText = "Ctrl";
-      fifthLine.children[1].innerText = "Win";
-      fifthLine.children[2].innerText = "Alt";
-      fifthLine.children[3].innerText = " ";
-      fifthLine.children[4].innerText = "Alt";
-      fifthLine.children[5].innerText = "◄";
-      fifthLine.children[6].innerText = "▼";
-      fifthLine.children[7].innerText = "►";
-      fifthLine.children[8].innerText = "Ctrl";
-    }
-  }
-}
-
-lang();
-
-wrapper.addEventListener("click", (e) => {
-  const a = e.target.className;
-  const b = e.target.innerText;
-  if (a !== "key-wrapper" && a !== "line" && b !== "Enter" && b !== "Tab" && b !== "CapsLock" && b !== "Backspace" && b !== "Del" && b !== "Alt" && b !== "Ctrl" && b !== "Win" && b !== "Shift") {
-    textInput.click();
-    textInput.setRangeText(e.target.innerText, textInput.selectionStart, textInput.selectionEnd, "end");
-    textInput.focus();
-  } else if (b === " ") {
-    textInput.click();
-    textInput.setRangeText(" ", textInput.selectionStart, textInput.selectionEnd, "end");
-    textInput.focus();
-  } else if (b === "Tab") {
-    textInput.click();
-    textInput.setRangeText("    ", textInput.selectionStart, textInput.selectionEnd, "end");
-    textInput.focus();
-  } else if (b === "Backspace") {
-    textInput.click();
-    if (textInput.selectionStart > 0)textInput.setRangeText("", textInput.selectionStart - 1, textInput.selectionEnd, "end");
-    textInput.focus();
-  } else if (b === "Del") {
-    textInput.click();
-    textInput.setRangeText("", textInput.selectionStart, textInput.selectionEnd + 1, "end");
-    textInput.focus();
-  } else if (b === "Enter") {
-    textInput.click();
-    textInput.setRangeText("\n", textInput.selectionStart, textInput.selectionEnd, "end");
-    textInput.focus();
-  } else if (b === "CapsLock") {
-    textInput.click();
-    textInput.focus();
-    if (caps === "big") { caps = "small"; thirdLine.children[0].classList.remove("active"); } else if (caps === "small") { caps = "big"; thirdLine.children[0].classList.add("active"); }
-    lang();
-  }
-});
 
 let checkAnimation = 0;
 const checkElem = {};
@@ -458,6 +159,42 @@ function animationDown(e) {
   checkAnimation = 1;
 }
 
+wrapper.addEventListener("click", (e) => {
+  const a = e.target.className;
+  const b = e.target.innerText;
+  if (a !== "key-wrapper" && a !== "line" && b !== "Enter" && b !== "Tab" && b !== "CapsLock" && b !== "Backspace" && b !== "Del" && b !== "Alt" && b !== "Ctrl" && b !== "Win" && b !== "Shift") {
+    textInput.click();
+    textInput.setRangeText(e.target.innerText, textInput.selectionStart, textInput.selectionEnd, "end");
+    textInput.focus();
+  } else if (b === " ") {
+    textInput.click();
+    textInput.setRangeText(" ", textInput.selectionStart, textInput.selectionEnd, "end");
+    textInput.focus();
+  } else if (b === "Tab") {
+    textInput.click();
+    textInput.setRangeText("    ", textInput.selectionStart, textInput.selectionEnd, "end");
+    textInput.focus();
+  } else if (b === "Backspace") {
+    textInput.click();
+    if (textInput.selectionStart > 0)textInput.setRangeText("", textInput.selectionStart - 1, textInput.selectionEnd, "end");
+    textInput.focus();
+  } else if (b === "Del") {
+    textInput.click();
+    textInput.setRangeText("", textInput.selectionStart, textInput.selectionEnd + 1, "end");
+    textInput.focus();
+  } else if (b === "Enter") {
+    textInput.click();
+    textInput.setRangeText("\n", textInput.selectionStart, textInput.selectionEnd, "end");
+    textInput.focus();
+  } else if (b === "CapsLock") {
+    textInput.click();
+    textInput.focus();
+    if (type === "ruSmall") { animationDown(e.target); type = "ruCaps"; thirdLine.children[0].classList.add("active"); } else if (type === "ruCaps") { animationUp(e.target); type = "ruSmall"; thirdLine.children[0].classList.remove("active"); }
+    if (type === "enSmall") { animationDown(e.target); type = "enCaps"; thirdLine.children[0].classList.add("active"); } else if (type === "enCaps") { animationUp(e.target); type = "enSmall"; thirdLine.children[0].classList.remove("active"); }
+    change();
+  }
+});
+
 function buttonUp(e) {
   e.click();
   animationDown(e);
@@ -475,14 +212,17 @@ wrapper.addEventListener("mousedown", (e) => {
   if (a !== "key-wrapper" && a !== "line") {
     let radius = 0;
     e.target.classList.add("active");
-    if (e.target.innerText !== "CapsLock" && e.target.innerText !== "Shift") {
+    if (e.target.innerText !== "CapsLock") {
       // eslint-disable-next-line no-useless-return
       setInterval(() => { radius = +radius; if (radius < 20) { radius += 1; e.target.style.borderRadius = `${radius}px`; } else return; }, 5);
-    } else if (e.target.innerText === "Shift") {
-      if (caps === "small") { caps = "big"; } else if (caps === "big") { caps = "small"; }
-      lang();
-    } else if (e.target.innerText === "CapsLock") {
-      if (caps === "small") { animationDown(thirdLine.children[0]); } else if (caps === "big") { animationUp(thirdLine.children[0]); }
+      if (e.target.innerText === "Shift") {
+        if (type === "ruSmall") { type = "ruShift"; }
+        if (type === "enSmall") { type = "enShift"; }
+        if (type === "ruCaps") { type = "ruShiftCaps"; }
+        if (type === "enCaps") { type = "enShiftCaps"; }
+        e.target.classList.add("active");
+        change();
+      }
     }
   }
 });
@@ -495,8 +235,12 @@ wrapper.addEventListener("mouseup", (e) => {
     // eslint-disable-next-line no-useless-return
     setInterval(() => { radius = +radius; if (radius > 0) { radius -= 1; e.target.style.borderRadius = `${radius}px`; } else return; }, 5);
     if (e.target.innerText === "Shift") {
-      if (caps === "small") { caps = "big"; } else if (caps === "big") { caps = "small"; }
-      lang();
+      if (type === "ruShift") { type = "ruSmall"; }
+      if (type === "enShift") { type = "enSmall"; }
+      if (type === "enShiftCaps") { type = "enCaps"; }
+      if (type === "ruShiftCaps") { type = "ruCaps"; }
+      e.target.classList.remove("active");
+      change();
     }
   }
 });
@@ -509,17 +253,13 @@ wrapper.addEventListener("mouseout", (e) => {
       let radius = 20;
       // eslint-disable-next-line no-useless-return
       setInterval(() => { radius = +radius; if (radius > 0) { radius -= 1; e.target.style.borderRadius = `${radius}px`; } else return; }, 5);
-      if (e.target.innerText === "Shift") {
-        if (caps === "small") { caps = "big"; } else if (caps === "big") { caps = "small"; }
-        lang();
-      }
     }
   }
 });
 
 let checkCaps = 0;
-let checkShiftL = 0;
-let checkShiftR = 0;
+const checkShiftL = 0;
+const checkShiftR = 0;
 let checkChange = 0;
 const keydown = (e) => {
   e.preventDefault();
@@ -588,15 +328,9 @@ const keydown = (e) => {
   }
   if (!checkCaps) {
     if (e.keyCode === 20) {
-      checkCaps = 1;
-      thirdLine.children[0].click();
-      if (caps === "big") {
-        animationDown(thirdLine.children[0]);
-        thirdLine.children[0].classList.add("active");
-      } else if (caps === "small") {
-        animationUp(thirdLine.children[0]);
-        thirdLine.children[0].classList.remove("active");
-      }
+      if (type === "ruSmall") { type = "ruCaps"; thirdLine.children[0].classList.add("active"); } else if (type === "ruCaps") { type = "ruSmall"; thirdLine.children[0].classList.remove("active"); }
+      if (type === "enSmall") { type = "enCaps"; thirdLine.children[0].classList.add("active"); } else if (type === "enCaps") { type = "enSmall"; thirdLine.children[0].classList.remove("active"); }
+      change();
     }
   }
   if (e.keyCode === 65) {
@@ -637,11 +371,12 @@ const keydown = (e) => {
   }
   if (!checkShiftL) {
     if (e.keyCode === 16 && e.code === "ShiftLeft") {
-      checkShiftL = 1;
-      if (caps === "small") { caps = "big"; } else if (caps === "big") { caps = "small"; }
-      lang();
-      animationDown(forthLine.children[0]);
+      if (type === "ruSmall") { type = "ruShift"; }
+      if (type === "enSmall") { type = "enShift"; }
+      if (type === "ruCaps") { type = "ruShiftCaps"; }
+      if (type === "enCaps") { type = "enShiftCaps"; }
       forthLine.children[0].classList.add("active");
+      change();
     }
   }
   if (e.keyCode === 90) {
@@ -679,11 +414,12 @@ const keydown = (e) => {
   }
   if (!checkShiftR) {
     if (e.keyCode === 16 && e.code === "ShiftRight") {
-      checkShiftR = 1;
-      if (caps === "small") { caps = "big"; } else if (caps === "big") { caps = "small"; }
-      lang();
-      animationDown(forthLine.children[12]);
+      if (type === "ruSmall") { type = "ruShift"; }
+      if (type === "enSmall") { type = "enShift"; }
+      if (type === "ruCaps") { type = "ruShiftCaps"; }
+      if (type === "enCaps") { type = "enShiftCaps"; }
       forthLine.children[12].classList.add("active");
+      change();
     }
   }
   if (e.keyCode === 17 && e.code === "ControlLeft") {
@@ -720,14 +456,14 @@ const keydown = (e) => {
   if (!checkChange) {
     if ((ctrlL === "button-small littleBtn active" || ctrlR === "button-small littleBtn active") && (altL === "button-small littleBtn active" || altR === "button-small littleBtn active")) {
       checkChange = 1;
-      if (language === "en") {
-        language = "ru";
-      } else if (language === "ru") {
-        language = "en";
+      if (type[0] === "e") {
+        type = `ru${type.slice(2)}`;
+      } else if (type[0] === "r") {
+        type = `en${type.slice(2)}`;
       }
+      change();
     }
   }
-  lang();
 };
 
 const keyup = (e) => {
@@ -834,11 +570,12 @@ const keyup = (e) => {
     buttonDown(thirdLine.children[12]);
   }
   if (e.keyCode === 16 && e.code === "ShiftLeft") {
-    checkShiftL = 0;
-    if (caps === "small") { caps = "big"; } else if (caps === "big") { caps = "small"; }
-    lang();
-    animationUp(forthLine.children[0]);
+    if (type === "ruShift") { type = "ruSmall"; }
+    if (type === "enShift") { type = "enSmall"; }
+    if (type === "enShiftCaps") { type = "enCaps"; }
+    if (type === "ruShiftCaps") { type = "ruCaps"; }
     forthLine.children[0].classList.remove("active");
+    change();
   }
   if (e.keyCode === 90) {
     buttonDown(forthLine.children[1]);
@@ -874,11 +611,12 @@ const keyup = (e) => {
     buttonDown(forthLine.children[11]);
   }
   if (e.keyCode === 16 && e.code === "ShiftRight") {
-    checkShiftR = 0;
-    if (caps === "small") { caps = "big"; } else if (caps === "big") { caps = "small"; }
-    lang();
-    animationUp(forthLine.children[12]);
+    if (type === "ruShift") { type = "ruSmall"; }
+    if (type === "enShift") { type = "enSmall"; }
+    if (type === "enShiftCaps") { type = "enCaps"; }
+    if (type === "ruShiftCaps") { type = "ruCaps"; }
     forthLine.children[12].classList.remove("active");
+    change();
   }
   if (e.keyCode === 17 && e.code === "ControlLeft") {
     checkChange = 0;
@@ -915,4 +653,3 @@ const keyup = (e) => {
 
 document.addEventListener("keyup", keyup);
 document.addEventListener("keydown", keydown);
-lang();
