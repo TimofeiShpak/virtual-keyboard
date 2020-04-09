@@ -1,28 +1,6 @@
-/* eslint-disable no-plusplus */
-function addElement(element, place) {
-  place.append(element);
-}
-const textLanguage = document.createElement("p");
-textLanguage.innerText = "Клавиатура создана в операционной системе Windows\nКнопки для смены языка: ctrl+alt";
-addElement(textLanguage, document.body);
-const textInput = document.createElement("textarea");
-textInput.classList.add("text-input");
-const wrapper = document.createElement("div");
-wrapper.classList.add("key-wrapper");
-addElement(textInput, document.body);
-addElement(wrapper, document.body);
-const firstLine = document.createElement("div");
-const secondLine = document.createElement("div");
-const thirdLine = document.createElement("div");
-const forthLine = document.createElement("div");
-const fifthLine = document.createElement("div");
-const arrayLines = [firstLine, secondLine, thirdLine, forthLine, fifthLine];
-for (let i = 0; i < arrayLines.length; i++) {
-  arrayLines[i].classList.add("line");
-  addElement(arrayLines[i], wrapper);
-}
-
-let type = "ruSmall";
+const MAX_RADIUS = 20;
+const MIN_RADIUS = 0;
+const typePast = JSON.parse(localStorage.getItem("myKey"));
 
 const firstLineKeys = {
   ruSmall: ["ё", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "Backspace"],
@@ -77,13 +55,36 @@ const fifthLineKeys = {
   name: "fifthLine",
 };
 
-const arrayLinesKeys = [firstLineKeys, secondLineKeys, thirdLineKeys, forthLineKeys, fifthLineKeys];
+let textLanguage = document.createElement("p");
+let textInput = document.createElement("textarea");
+let wrapper = document.createElement("div");
+let arrayLines = [];
+let arrayLinesKeys = [firstLineKeys, secondLineKeys, thirdLineKeys, forthLineKeys, fifthLineKeys];
 
+textLanguage.innerText = "Клавиатура создана в операционной системе Windows\nКнопки для смены языка: ctrl+alt";
+textInput.classList.add("text-input");
+wrapper.classList.add("key-wrapper");
+
+function addElement(element, place) {
+  place.append(element);
+}
+
+addElement(textLanguage, document.body);
+addElement(textInput, document.body);
+addElement(wrapper, document.body);
+for (let i = 0; i < 5; i++) {
+  let line = document.createElement("div");
+  line.classList.add("line");
+  arrayLines.push(line);
+  addElement(arrayLines[i], wrapper);
+}
+
+let type = "ruSmall";
 function createRow() {
   for (let j = 0; j < arrayLinesKeys.length; j++) {
-    const keys = arrayLinesKeys[j][type];
+    let keys = arrayLinesKeys[j][type];
     for (let i = 0; i < keys.length; i++) {
-      const button = document.createElement("button");
+      let button = document.createElement("button");
       button.classList.add("button-small");
       button.innerText = keys[i];
       addElement(button, arrayLines[j]);
@@ -92,11 +93,12 @@ function createRow() {
 }
 createRow();
 
-const typePast = JSON.parse(localStorage.getItem("myKey"));
-if (type === "null" || type === "") type = "ruSmall";
 if (typePast) {
-  if (typePast[0] === "e") type = "enSmall";
-  else if (typePast[0] === "r") type = "ruSmall";
+  if (typePast[0] === "e") {
+    type = "enSmall";
+  } else if (typePast[0] === "r") {
+    type = "ruSmall";
+  }
 }
 
 function change() {
@@ -104,7 +106,7 @@ function change() {
   localStorage.setItem("myKey", save);
   for (let j = 0; j < arrayLinesKeys.length; j++) {
     if (arrayLinesKeys[j][type] !== undefined) {
-      const keys = arrayLinesKeys[j][type];
+      let keys = arrayLinesKeys[j][type];
       for (let i = 0; i < keys.length; i++) {
         arrayLines[j].children[i].innerText = keys[i];
       }
@@ -113,147 +115,206 @@ function change() {
 }
 change();
 
-firstLine.children[13].classList.add("bigBtnL");
-secondLine.children[0].classList.add("tab");
-secondLine.children[14].classList.add("littleBtn");
-thirdLine.children[0].classList.add("bigBtnL");
-thirdLine.children[12].classList.add("bigBtnR");
-forthLine.children[0].classList.add("bigBtnL");
-forthLine.children[11].classList.add("littleBtn");
-forthLine.children[12].classList.add("bigBtnR");
+arrayLines[0].children[13].classList.add("bigBtnL");
+arrayLines[1].children[0].classList.add("tab");
+arrayLines[1].children[14].classList.add("littleBtn");
+arrayLines[2].children[0].classList.add("bigBtnL");
+arrayLines[2].children[12].classList.add("bigBtnR");
+arrayLines[3].children[0].classList.add("bigBtnL");
+arrayLines[3].children[11].classList.add("littleBtn");
+arrayLines[3].children[12].classList.add("bigBtnR");
 
 for (let i = 0; i < 10; i++) {
   if (i !== 3 && i < 9) {
-    fifthLine.children[i].classList.add("littleBtn");
+    arrayLines[4].children[i].classList.add("littleBtn");
   }
 }
-fifthLine.children[3].classList.add("space");
-
+arrayLines[4].children[3].classList.add("space");
+let deleteButton = arrayLines[1].children[14];
+let shiftLeftButton = arrayLines[3].children[0];
+let shiftRightButton = arrayLines[3].children[12];
+let controlLeftButton = arrayLines[4].children[0];
+let controlRightButton = arrayLines[4].children[8];
+let altLeftButton = arrayLines[4].children[2];
+let altRightButton = arrayLines[4].children[4];
+let winButton = arrayLines[4].children[1];
+let spaceButton = arrayLines[4].children[3];
+let arrowUpButton = arrayLines[3].children[11];
+let arrowLeftButton = arrayLines[4].children[5];
+let arrowDownButton = arrayLines[4].children[6];
+let arrowRightButton = arrayLines[4].children[7];
+let capsLockButton = arrayLines[2].children[0];
 
 let checkAnimation = 0;
-const checkElem = {};
-
-function animationUp(e) {
-  checkAnimation = 0;
-  delete checkElem[e.innerText];
-  let radius = 20;
-  setInterval(() => {
-    radius = +radius;
-    if (radius > 0) {
-      radius -= 1; e.style.borderRadius = `${radius}px`;
-    // eslint-disable-next-line no-useless-return
-    } else return;
-  }, 5);
-}
+let checkElem = {};
 
 function animationDown(e) {
   if (!checkAnimation || checkElem[e.innerText] === undefined) {
     checkElem[e.innerText] = 1;
-    let radius = 0;
+    let radius = MIN_RADIUS;
     setInterval(() => {
       radius = +radius;
-      if (radius < 20) {
+      if (radius < MAX_RADIUS) {
         radius += 1; e.style.borderRadius = `${radius}px`;
-      // eslint-disable-next-line no-useless-return
-      } else return;
+      }
     }, 5);
+    checkAnimation = 1;
   }
-  checkAnimation = 1;
 }
 
+function animationUp(e) {
+  checkAnimation = 0;
+  delete checkElem[e.innerText];
+  if (e.className !== "key-wrapper") {
+    let radius = MAX_RADIUS;
+    setInterval(() => {
+      radius = +radius;
+      if (radius > MIN_RADIUS) {
+        radius -= 1; e.style.borderRadius = `${radius}px`;
+      } else {
+        return;
+      }
+    }, 5);
+  }
+}
+
+function capsLock() {
+  switch (type) {
+    case "ruSmall":
+      type = "ruCaps";
+      capsLockButton.classList.add("active");
+      animationDown(capsLockButton);
+      break;
+    case "enSmall":
+      type = "enCaps";
+      capsLockButton.classList.add("active");
+      animationDown(capsLockButton);
+      break;
+    case "ruCaps":
+      type = "ruSmall";
+      capsLockButton.classList.remove("active");
+      animationUp(capsLockButton);
+      break;
+    default:
+      type = "enSmall";
+      capsLockButton.classList.remove("active");
+      animationUp(capsLockButton);
+  }
+  change();
+}
+
+let checkButtons = ["key-wrapper", "line", "Shift", "Ctrl", "Alt", "Win"];
 wrapper.addEventListener("click", (e) => {
-  const a = e.target.className;
-  const b = e.target.innerText;
-  if (a !== "key-wrapper" && a !== "line" && b !== "Enter" && b !== "Tab" && b !== "CapsLock" && b !== "Backspace" && b !== "Del" && b !== "Alt" && b !== "Ctrl" && b !== "Win" && b !== "Shift" && a !== "button-small space") {
-    textInput.click();
-    textInput.setRangeText(e.target.innerText, textInput.selectionStart, textInput.selectionEnd, "end");
+  let buttonClassName = e.target.className;
+  let buttonInnerText = e.target.innerText;
+  if (!checkButtons.includes(buttonClassName) && !checkButtons.includes(buttonInnerText)) {
     textInput.focus();
-  } else if (b === "") {
-    textInput.click();
-    textInput.setRangeText(" ", textInput.selectionStart, textInput.selectionEnd, "end");
-    textInput.focus();
-  } else if (b === "Tab") {
-    textInput.click();
-    textInput.setRangeText("    ", textInput.selectionStart, textInput.selectionEnd, "end");
-    textInput.focus();
-  } else if (b === "Backspace") {
-    textInput.click();
-    if (textInput.selectionStart > 0)textInput.setRangeText("", textInput.selectionStart - 1, textInput.selectionEnd, "end");
-    textInput.focus();
-  } else if (b === "Del") {
-    textInput.click();
-    textInput.setRangeText("", textInput.selectionStart, textInput.selectionEnd + 1, "end");
-    textInput.focus();
-  } else if (b === "Enter") {
-    textInput.click();
-    textInput.setRangeText("\n", textInput.selectionStart, textInput.selectionEnd, "end");
-    textInput.focus();
+    switch (buttonInnerText) {
+      case "":
+        textInput.setRangeText(" ", textInput.selectionStart, textInput.selectionEnd, "end");
+        break;
+      case "Tab":
+        textInput.setRangeText("    ", textInput.selectionStart, textInput.selectionEnd, "end");
+        break;
+      case "Backspace":
+        if (textInput.selectionStart > 0)textInput.setRangeText("", textInput.selectionStart - 1, textInput.selectionEnd, "end");
+        break;
+      case "Del":
+        textInput.setRangeText("", textInput.selectionStart, textInput.selectionEnd + 1, "end");
+        break;
+      case "Enter":
+        textInput.setRangeText("\n", textInput.selectionStart, textInput.selectionEnd, "end");
+        break;
+      case "CapsLock":
+        capsLock();
+        break;
+      default:
+        textInput.setRangeText(buttonInnerText, textInput.selectionStart, textInput.selectionEnd, "end");
+    }
   }
 });
 
-function buttonUp(e) {
-  e.click();
-  animationDown(e);
-  e.classList.add("active");
+function buttonDown(e) {
+  if (e !== undefined) {
+    e.click();
+    if (e.className !== "key-wrapper") {
+      animationDown(e);
+      e.classList.add("active");
+    }
+  }
 }
 
-function buttonDown(e) {
-  animationUp(e);
-  e.classList.remove("active");
+function buttonUp(e) {
+  if (e !== undefined) {
+    animationUp(e);
+    e.classList.remove("active");
+  }
+}
+
+let checkShiftUp = 1; // проверка нажата ли кнопка shift
+
+function shiftDown() {
+  if (checkShiftUp) {
+    checkShiftUp = 0;
+    switch (type) {
+      case "ruSmall":
+        type = "ruShift";
+        break;
+      case "enSmall":
+        type = "enShift";
+        break;
+      case "ruCaps":
+        type = "ruShiftCaps";
+        break;
+      default:
+        type = "enShiftCaps";
+    }
+    change();
+  }
+}
+
+function shiftUp() {
+  checkShiftUp = 1;
+  switch (type) {
+    case "ruShift":
+      type = "ruSmall";
+      break;
+    case "enShift":
+      type = "enSmall";
+      break;
+    case "ruShiftCaps":
+      type = "ruCaps";
+      break;
+    default:
+      type = "enCaps";
+  }
+  change();
 }
 
 wrapper.addEventListener("mousedown", (e) => {
   textInput.focus();
-  const a = e.target.className;
-  if (a !== "key-wrapper" && a !== "line") {
-    let radius = 0;
+  let buttonClassName = e.target.className;
+  let buttonInnerText = e.target.innerText;
+  if (buttonClassName !== "key-wrapper" && buttonClassName !== "line") {
     e.target.classList.add("active");
-    if (e.target.innerText !== "CapsLock") {
-      // eslint-disable-next-line no-useless-return
-      setInterval(() => { radius = +radius; if (radius < 20) { radius += 1; e.target.style.borderRadius = `${radius}px`; } else return; }, 5);
-      if (e.target.innerText === "Shift") {
-        if (type === "ruSmall") { type = "ruShift"; }
-        if (type === "enSmall") { type = "enShift"; }
-        if (type === "ruCaps") { type = "ruShiftCaps"; }
-        if (type === "enCaps") { type = "enShiftCaps"; }
+    if (buttonInnerText !== "CapsLock") {
+      animationDown(e.target);
+      if (buttonInnerText === "Shift") {
+        shiftDown();
         e.target.classList.add("active");
-        change();
       }
-    } else if (e.target.innerText === "CapsLock") {
-      if (type === "ruSmall") {
-        type = "ruCaps";
-        thirdLine.children[0].classList.add("active");
-        animationDown(thirdLine.children[0]);
-      } else if (type === "ruCaps") {
-        type = "ruSmall";
-        thirdLine.children[0].classList.remove("active");
-        animationUp(thirdLine.children[0]);
-      } if (type === "enSmall") {
-        type = "enCaps";
-        thirdLine.children[0].classList.add("active");
-        animationDown(thirdLine.children[0]);
-      } else if (type === "enCaps") {
-        type = "enSmall";
-        thirdLine.children[0].classList.remove("active");
-        animationUp(thirdLine.children[0]);
-      }
-      change();
     }
   }
 });
 
 wrapper.addEventListener("mouseup", (e) => {
-  const a = e.target.className;
-  if (a !== "key-wrapper" && a !== "line" && e.target.innerText !== "CapsLock") {
+  let buttonClassName = e.target.className;
+  let buttonInnerText = e.target.innerText;
+  if (buttonClassName !== "key-wrapper" && buttonClassName !== "line" && buttonInnerText !== "CapsLock") {
     e.target.classList.remove("active");
-    let radius = 20;
-    // eslint-disable-next-line no-useless-return
-    setInterval(() => { radius = +radius; if (radius > 0) { radius -= 1; e.target.style.borderRadius = `${radius}px`; } else return; }, 5);
-    if (e.target.innerText === "Shift") {
-      if (type === "ruShift") { type = "ruSmall"; }
-      if (type === "enShift") { type = "enSmall"; }
-      if (type === "enShiftCaps") { type = "enCaps"; }
-      if (type === "ruShiftCaps") { type = "ruCaps"; }
+    animationUp(e.target);
+    if (buttonInnerText === "Shift") {
+      shiftUp();
       e.target.classList.remove("active");
       change();
     }
@@ -261,429 +322,153 @@ wrapper.addEventListener("mouseup", (e) => {
 });
 
 wrapper.addEventListener("mouseout", (e) => {
-  const a = e.target.className;
-  if (a.indexOf("active") !== -1) {
-    if (a !== "key-wrapper" && a !== "line" && e.target.innerText !== "CapsLock") {
+  let buttonClassName = e.target.className;
+  let buttonInnerText = e.target.innerText;
+  if (buttonClassName.indexOf("active") !== -1) {
+    if (buttonClassName !== "key-wrapper" && buttonClassName !== "line" && buttonInnerText !== "CapsLock") {
+      if (buttonInnerText === "Shift") {
+        shiftUp();
+      }
       e.target.classList.remove("active");
-      let radius = 20;
-      // eslint-disable-next-line no-useless-return
-      setInterval(() => { radius = +radius; if (radius > 0) { radius -= 1; e.target.style.borderRadius = `${radius}px`; } else return; }, 5);
+      animationUp(e.target);
     }
   }
 });
 
-let checkCaps = 1;
-const checkShiftL = 0;
-const checkShiftR = 0;
-let checkChange = 0;
-const keydown = (e) => {
-  e.preventDefault();
-  if (e.keyCode === 192) {
-    buttonUp(firstLine.children[0]);
+let checkCaps = 1; // проверка нажата ли кнопка CapsLock
+let checkChange = 1; // проверка нажаты ли кнопки для смены языка
+let checkCtrl = 0; // проверка нажата ли кнопка ctrl
+let checkAlt = 0; // проверка нажата ли кнопка alt
+
+function changeLanguage() {
+  if (checkCtrl && checkAlt && checkChange) {
+    checkChange = 0;
+    if (type[0] === "r") {
+      type = (`en${type.slice(2)}`);
+    } else {
+      type = (`ru${type.slice(2)}`);
+    }
+    change();
   }
-  if (e.keyCode > 48 && e.keyCode < 58) {
-    buttonUp(firstLine.children[e.keyCode - 48]);
+}
+
+function findOtherButton(key) {
+  let saveType = type;
+  if (type[0] !== "e") {
+    type = (`en${type.slice(2)}`);
+    change();
   }
-  if (e.keyCode === 48) {
-    buttonUp(firstLine.children[10]);
+  for (let i = 0; i < arrayLines.length; i++) {
+    for (let j = 0; j < arrayLines[i].children.length; j++) {
+      if (key === arrayLines[i].children[j].innerText) {
+        type = saveType;
+        change();
+        return arrayLines[i].children[j];
+      }
+    }
   }
-  if (e.keyCode === 189) {
-    buttonUp(firstLine.children[11]);
+}
+
+function findButton(code, key) {
+  switch (code) {
+    case "ShiftLeft":
+      return shiftLeftButton;
+    case "ShiftRight":
+      return shiftRightButton;
+    case "Space":
+      return spaceButton;
+    case "Delete":
+      return deleteButton;
+    case "ControlLeft":
+      return controlLeftButton;
+    case "ControlRight":
+      return controlRightButton;
+    case "AltRight":
+      return altRightButton;
+    case "AltLeft":
+      return altLeftButton;
+    case "MetaLeft":
+      return winButton;
+    case "CapsLock":
+      return wrapper;
+    case "ArrowUp":
+      return arrowUpButton;
+    case "ArrowLeft":
+      return arrowLeftButton;
+    case "ArrowDown":
+      return arrowDownButton;
+    case "ArrowRight":
+      return arrowRightButton;
+    default:
+      return findOtherButton(key);
   }
-  if (e.keyCode === 187) {
-    buttonUp(firstLine.children[12]);
-  }
-  if (e.keyCode === 8) {
-    buttonUp(firstLine.children[13]);
-  }
-  if (e.keyCode === 9) {
-    buttonUp(secondLine.children[0]);
-  }
-  if (e.keyCode === 81) {
-    buttonUp(secondLine.children[1]);
-  }
-  if (e.keyCode === 87) {
-    buttonUp(secondLine.children[2]);
-  }
-  if (e.keyCode === 69) {
-    buttonUp(secondLine.children[3]);
-  }
-  if (e.keyCode === 82) {
-    buttonUp(secondLine.children[4]);
-  }
-  if (e.keyCode === 84) {
-    buttonUp(secondLine.children[5]);
-  }
-  if (e.keyCode === 89) {
-    buttonUp(secondLine.children[6]);
-  }
-  if (e.keyCode === 85) {
-    buttonUp(secondLine.children[7]);
-  }
-  if (e.keyCode === 73) {
-    buttonUp(secondLine.children[8]);
-  }
-  if (e.keyCode === 79) {
-    buttonUp(secondLine.children[9]);
-  }
-  if (e.keyCode === 80) {
-    buttonUp(secondLine.children[10]);
-  }
-  if (e.keyCode === 219) {
-    buttonUp(secondLine.children[11]);
-  }
-  if (e.keyCode === 221) {
-    buttonUp(secondLine.children[12]);
-  }
-  if (e.keyCode === 220) {
-    buttonUp(secondLine.children[13]);
-  }
-  if (e.keyCode === 46) {
-    buttonUp(secondLine.children[14]);
-  }
+}
+
+function checkCapsLock() {
   if (checkCaps) {
-    if (e.keyCode === 20) {
-      checkCaps = 0;
-      if (type === "ruSmall") {
-        type = "ruCaps";
-        thirdLine.children[0].classList.add("active");
-        animationDown(thirdLine.children[0]);
-      } else if (type === "ruCaps") {
-        type = "ruSmall";
-        thirdLine.children[0].classList.remove("active");
-        animationUp(thirdLine.children[0]);
-      } if (type === "enSmall") {
-        type = "enCaps";
-        thirdLine.children[0].classList.add("active");
-        animationDown(thirdLine.children[0]);
-      } else if (type === "enCaps") {
-        type = "enSmall";
-        thirdLine.children[0].classList.remove("active");
-        animationUp(thirdLine.children[0]);
-      }
-      change();
-    }
+    checkCaps = 0;
+    capsLock();
   }
-  if (e.keyCode === 65) {
-    buttonUp(thirdLine.children[1]);
+}
+
+let keydown = (e) => {
+  e.preventDefault();
+  switch (e.code) {
+    case "ShiftLeft":
+      shiftDown();
+      break;
+    case "ShiftRight":
+      shiftDown();
+      break;
+    case "CapsLock":
+      checkCapsLock();
+      break;
+    case "ControlLeft":
+      checkCtrl = 1;
+      break;
+    case "ControlRight":
+      checkCtrl = 1;
+      break;
+    case "AltRight":
+      checkAlt = 1;
+      break;
+    case "AltLeft":
+      checkAlt = 1;
+      break;
+    default:
   }
-  if (e.keyCode === 83) {
-    buttonUp(thirdLine.children[2]);
-  }
-  if (e.keyCode === 68) {
-    buttonUp(thirdLine.children[3]);
-  }
-  if (e.keyCode === 70) {
-    buttonUp(thirdLine.children[4]);
-  }
-  if (e.keyCode === 71) {
-    buttonUp(thirdLine.children[5]);
-  }
-  if (e.keyCode === 72) {
-    buttonUp(thirdLine.children[6]);
-  }
-  if (e.keyCode === 74) {
-    buttonUp(thirdLine.children[7]);
-  }
-  if (e.keyCode === 75) {
-    buttonUp(thirdLine.children[8]);
-  }
-  if (e.keyCode === 76) {
-    buttonUp(thirdLine.children[9]);
-  }
-  if (e.keyCode === 186) {
-    buttonUp(thirdLine.children[10]);
-  }
-  if (e.keyCode === 222) {
-    buttonUp(thirdLine.children[11]);
-  }
-  if (e.keyCode === 13) {
-    buttonUp(thirdLine.children[12]);
-  }
-  if (!checkShiftL) {
-    if (e.keyCode === 16 && e.code === "ShiftLeft") {
-      if (type === "ruSmall") { type = "ruShift"; }
-      if (type === "enSmall") { type = "enShift"; }
-      if (type === "ruCaps") { type = "ruShiftCaps"; }
-      if (type === "enCaps") { type = "enShiftCaps"; }
-      forthLine.children[0].classList.add("active");
-      animationDown(forthLine.children[0]);
-      change();
-    }
-  }
-  if (e.keyCode === 90) {
-    buttonUp(forthLine.children[1]);
-  }
-  if (e.keyCode === 88) {
-    buttonUp(forthLine.children[2]);
-  }
-  if (e.keyCode === 67) {
-    buttonUp(forthLine.children[3]);
-  }
-  if (e.keyCode === 86) {
-    buttonUp(forthLine.children[4]);
-  }
-  if (e.keyCode === 66) {
-    buttonUp(forthLine.children[5]);
-  }
-  if (e.keyCode === 78) {
-    buttonUp(forthLine.children[6]);
-  }
-  if (e.keyCode === 77) {
-    buttonUp(forthLine.children[7]);
-  }
-  if (e.keyCode === 188) {
-    buttonUp(forthLine.children[8]);
-  }
-  if (e.keyCode === 190) {
-    buttonUp(forthLine.children[9]);
-  }
-  if (e.keyCode === 191) {
-    buttonUp(forthLine.children[10]);
-  }
-  if (e.keyCode === 38) {
-    buttonUp(forthLine.children[11]);
-  }
-  if (!checkShiftR) {
-    if (e.keyCode === 16 && e.code === "ShiftRight") {
-      if (type === "ruSmall") { type = "ruShift"; }
-      if (type === "enSmall") { type = "enShift"; }
-      if (type === "ruCaps") { type = "ruShiftCaps"; }
-      if (type === "enCaps") { type = "enShiftCaps"; }
-      forthLine.children[12].classList.add("active");
-      animationDown(forthLine.children[12]);
-      change();
-    }
-  }
-  if (e.keyCode === 17 && e.code === "ControlLeft") {
-    buttonUp(fifthLine.children[0]);
-  }
-  if (e.keyCode === 91) {
-    buttonUp(fifthLine.children[1]);
-  }
-  if (e.keyCode === 18 && e.code === "AltLeft") {
-    buttonUp(fifthLine.children[2]);
-  }
-  if (e.keyCode === 32) {
-    buttonUp(fifthLine.children[3]);
-  }
-  if (e.keyCode === 18 && e.code === "AltRight") {
-    buttonUp(fifthLine.children[4]);
-  }
-  if (e.keyCode === 37) {
-    buttonUp(fifthLine.children[5]);
-  }
-  if (e.keyCode === 40) {
-    buttonUp(fifthLine.children[6]);
-  }
-  if (e.keyCode === 39) {
-    buttonUp(fifthLine.children[7]);
-  }
-  if (e.keyCode === 17 && e.code === "ControlRight") {
-    buttonUp(fifthLine.children[8]);
-  }
-  const ctrlL = fifthLine.children[0].className;
-  const ctrlR = fifthLine.children[8].className;
-  const altL = fifthLine.children[2].className;
-  const altR = fifthLine.children[4].className;
-  if (!checkChange) {
-    if ((ctrlL === "button-small littleBtn active" || ctrlR === "button-small littleBtn active") && (altL === "button-small littleBtn active" || altR === "button-small littleBtn active")) {
-      checkChange = 1;
-      if (type[0] === "e") {
-        type = `ru${type.slice(2)}`;
-      } else if (type[0] === "r") {
-        type = `en${type.slice(2)}`;
-      }
-      change();
-    }
-  }
+  changeLanguage();
+  buttonDown(findButton(e.code, e.key));
 };
 
-const keyup = (e) => {
-  if (e.keyCode === 20) {
-    checkCaps = 1;
+let keyup = (e) => {
+  e.preventDefault();
+  switch (e.code) {
+    case "ShiftLeft":
+      shiftUp();
+      break;
+    case "ShiftRight":
+      shiftUp();
+      break;
+    case "CapsLock":
+      checkCaps = 1;
+      break;
+    case "ControlLeft":
+      checkCtrl = 0;
+      break;
+    case "ControlRight":
+      checkCtrl = 0;
+      break;
+    case "AltRight":
+      checkAlt = 0;
+      break;
+    case "AltLeft":
+      checkAlt = 0;
+      break;
+    default:
   }
-  if (e.keyCode === 192) {
-    buttonDown(firstLine.children[0]);
-  }
-  if (e.keyCode > 48 && e.keyCode < 58) {
-    buttonDown(firstLine.children[e.keyCode - 48]);
-  }
-  if (e.keyCode === 48) {
-    buttonDown(firstLine.children[10]);
-  }
-  if (e.keyCode === 189) {
-    buttonDown(firstLine.children[11]);
-  }
-  if (e.keyCode === 187) {
-    buttonDown(firstLine.children[12]);
-  }
-  if (e.keyCode === 8) {
-    buttonDown(firstLine.children[13]);
-  }
-  if (e.keyCode === 9) {
-    buttonDown(secondLine.children[0]);
-  }
-  if (e.keyCode === 81) {
-    buttonDown(secondLine.children[1]);
-  }
-  if (e.keyCode === 87) {
-    buttonDown(secondLine.children[2]);
-  }
-  if (e.keyCode === 69) {
-    buttonDown(secondLine.children[3]);
-  }
-  if (e.keyCode === 82) {
-    buttonDown(secondLine.children[4]);
-  }
-  if (e.keyCode === 84) {
-    buttonDown(secondLine.children[5]);
-  }
-  if (e.keyCode === 89) {
-    buttonDown(secondLine.children[6]);
-  }
-  if (e.keyCode === 85) {
-    buttonDown(secondLine.children[7]);
-  }
-  if (e.keyCode === 73) {
-    buttonDown(secondLine.children[8]);
-  }
-  if (e.keyCode === 79) {
-    buttonDown(secondLine.children[9]);
-  }
-  if (e.keyCode === 80) {
-    buttonDown(secondLine.children[10]);
-  }
-  if (e.keyCode === 219) {
-    buttonDown(secondLine.children[11]);
-  }
-  if (e.keyCode === 221) {
-    buttonDown(secondLine.children[12]);
-  }
-  if (e.keyCode === 220) {
-    buttonDown(secondLine.children[13]);
-  }
-  if (e.keyCode === 46) {
-    buttonDown(secondLine.children[14]);
-  }
-  if (e.keyCode === 65) {
-    buttonDown(thirdLine.children[1]);
-  }
-  if (e.keyCode === 83) {
-    buttonDown(thirdLine.children[2]);
-  }
-  if (e.keyCode === 68) {
-    buttonDown(thirdLine.children[3]);
-  }
-  if (e.keyCode === 70) {
-    buttonDown(thirdLine.children[4]);
-  }
-  if (e.keyCode === 71) {
-    buttonDown(thirdLine.children[5]);
-  }
-  if (e.keyCode === 72) {
-    buttonDown(thirdLine.children[6]);
-  }
-  if (e.keyCode === 74) {
-    buttonDown(thirdLine.children[7]);
-  }
-  if (e.keyCode === 75) {
-    buttonDown(thirdLine.children[8]);
-  }
-  if (e.keyCode === 76) {
-    buttonDown(thirdLine.children[9]);
-  }
-  if (e.keyCode === 186) {
-    buttonDown(thirdLine.children[10]);
-  }
-  if (e.keyCode === 222) {
-    buttonDown(thirdLine.children[11]);
-  }
-  if (e.keyCode === 13) {
-    buttonDown(thirdLine.children[12]);
-  }
-  if (e.keyCode === 16 && e.code === "ShiftLeft") {
-    if (type === "ruShift") { type = "ruSmall"; }
-    if (type === "enShift") { type = "enSmall"; }
-    if (type === "enShiftCaps") { type = "enCaps"; }
-    if (type === "ruShiftCaps") { type = "ruCaps"; }
-    forthLine.children[0].classList.remove("active");
-    animationUp(forthLine.children[0]);
-    change();
-  }
-  if (e.keyCode === 90) {
-    buttonDown(forthLine.children[1]);
-  }
-  if (e.keyCode === 88) {
-    buttonDown(forthLine.children[2]);
-  }
-  if (e.keyCode === 67) {
-    buttonDown(forthLine.children[3]);
-  }
-  if (e.keyCode === 86) {
-    buttonDown(forthLine.children[4]);
-  }
-  if (e.keyCode === 66) {
-    buttonDown(forthLine.children[5]);
-  }
-  if (e.keyCode === 78) {
-    buttonDown(forthLine.children[6]);
-  }
-  if (e.keyCode === 77) {
-    buttonDown(forthLine.children[7]);
-  }
-  if (e.keyCode === 188) {
-    buttonDown(forthLine.children[8]);
-  }
-  if (e.keyCode === 190) {
-    buttonDown(forthLine.children[9]);
-  }
-  if (e.keyCode === 191) {
-    buttonDown(forthLine.children[10]);
-  }
-  if (e.keyCode === 38) {
-    buttonDown(forthLine.children[11]);
-  }
-  if (e.keyCode === 16 && e.code === "ShiftRight") {
-    if (type === "ruShift") { type = "ruSmall"; }
-    if (type === "enShift") { type = "enSmall"; }
-    if (type === "enShiftCaps") { type = "enCaps"; }
-    if (type === "ruShiftCaps") { type = "ruCaps"; }
-    forthLine.children[12].classList.remove("active");
-    animationUp(forthLine.children[12]);
-    change();
-  }
-  if (e.keyCode === 17 && e.code === "ControlLeft") {
-    checkChange = 0;
-    buttonDown(fifthLine.children[0]);
-  }
-  if (e.keyCode === 91) {
-    buttonDown(fifthLine.children[1]);
-  }
-  if (e.keyCode === 18 && e.code === "AltLeft") {
-    checkChange = 0;
-    buttonDown(fifthLine.children[2]);
-  }
-  if (e.keyCode === 32) {
-    buttonDown(fifthLine.children[3]);
-  }
-  if (e.keyCode === 18 && e.code === "AltRight") {
-    checkChange = 0;
-    buttonDown(fifthLine.children[4]);
-  }
-  if (e.keyCode === 37) {
-    buttonDown(fifthLine.children[5]);
-  }
-  if (e.keyCode === 40) {
-    buttonDown(fifthLine.children[6]);
-  }
-  if (e.keyCode === 39) {
-    buttonDown(fifthLine.children[7]);
-  }
-  if (e.keyCode === 17 && e.code === "ControlRight") {
-    checkChange = 0;
-    buttonDown(fifthLine.children[8]);
-  }
+  buttonUp(findButton(e.code, e.key));
+  checkChange = 1;
 };
 
 document.addEventListener("keyup", keyup);
