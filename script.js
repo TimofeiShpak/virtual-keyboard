@@ -167,12 +167,13 @@ function animationUp(e) {
   delete checkElem[e.innerText];
   if (e.className !== "key-wrapper") {
     let radius = MAX_RADIUS;
-    setInterval(() => {
+    let interval = setInterval(() => {
       radius = +radius;
       if (radius > MIN_RADIUS) {
         radius -= 1; e.style.borderRadius = `${radius}px`;
       } else {
-        return;
+        e.style.borderRadius = "";
+        clearInterval(interval);
       }
     }, 5);
   }
