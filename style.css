@@ -5,6 +5,12 @@
      border: none;
      outline: none;
 }
+
+.lang{
+     background-color: black !important;
+     width:80px !important;
+ }
+
  .key-wrapper{
      -webkit-user-select: none;
      width:700px;
@@ -57,7 +63,7 @@
      background-color: black;
 }
  .space{
-     width: 314px;
+     width: 268px;
 }
  .active{
      background-color: green;
